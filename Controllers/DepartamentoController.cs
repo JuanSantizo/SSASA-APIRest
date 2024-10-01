@@ -243,8 +243,16 @@ namespace APIRest.Controllers
 
                 cnn.Close();
 
+                if (Ldepartamento.Count == 1)
+                {
+                    return Ok(Ldepartamento[0]);
 
+                }
+                else
+                {
                 return Ok(Ldepartamento);
+
+                }
             }
             catch (Exception ex)
             {

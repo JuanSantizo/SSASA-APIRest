@@ -56,11 +56,13 @@ namespace APIRest.Controllers
                     Empleado.Apellidos = (string)dr["Apellidos"];
                     Empleado.FechaNacimiento = (DateTime)dr["FechaNacimiento"];
                     Empleado.SexoId = (int)dr["SexoId"];
+                    Empleado.Sexo = (string)dr["Sexo"];
                     Empleado.Fecha_Ingreso = (DateTime)dr["Fecha_Ingreso"];
                     Empleado.Edad = (int)dr["Edad"];
                     Empleado.Direccion = (string)dr["Direccion"];
                     Empleado.NIT = (string)dr["NIT"];
                     Empleado.DepartamentoId = (int)dr["DepartamentoId"];
+                    Empleado.Departamento = (string)dr["Departamento"];
                     Empleado.Estado = (string)dr["Estado"];
                     
 
@@ -303,7 +305,18 @@ namespace APIRest.Controllers
                 cnn.Close();
 
 
-                return Ok(LEmpleado);
+         
+
+                if (LEmpleado.Count == 1)
+                {
+                    return Ok(LEmpleado[0]);
+
+                }
+                else
+                {
+                    return Ok(LEmpleado);
+
+                }
             }
             catch (Exception ex)
             {
