@@ -24,13 +24,17 @@ namespace APIRest.Controllers
 
         private SqlConnection cnn;
 
+        /// <summary>
+        /// Metodo para obtener los sexos definidos
+        /// </summary>
+        /// <returns></returns>
         // GET: api/<SexoController>
         [HttpGet]
         public IActionResult  Get()
         {
             try {
 
-                 List<Sexo> Lsexo = new List<Sexo>();
+                 List<Sexos> Lsexo = new List<Sexos>();
 
                 string l_Cadena = _configuration.GetValue<string>("ConnectionStrings:Connection");                
                 cnn = new SqlConnection(l_Cadena);               
@@ -45,7 +49,7 @@ namespace APIRest.Controllers
 
                 while (dr.Read())
                 {
-                    Sexo sexo = new Sexo();
+                    Sexos sexo = new Sexos();
 
                     sexo.SexoId = (int)dr["SexoId"];
                     sexo.Descripcion = (string)dr["Descripcion"];
@@ -63,35 +67,5 @@ namespace APIRest.Controllers
                 return BadRequest(ex.Message);
             }            
         }
-
-        // GET api/<SexoController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<SexoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<SexoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<SexoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        
-       
-
-
     }
 }
