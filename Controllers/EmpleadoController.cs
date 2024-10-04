@@ -326,6 +326,55 @@ namespace APIRest.Controllers
         }
 
 
+        /// <summary>
+        /// Metodo para obtener un listado de empleados
+        /// </summary>
+        /// <returns></returns>
+        // GET: api/<EmpleadoController>
+        [HttpGet]
+        [Route("Estado")]
+        public IActionResult Estado()
+        {
+            try
+            {
+
+                List<Estados> LEstado = new List<Estados>();
+
+                string l_Cadena = _configuration.GetValue<string>("ConnectionStrings:Connection");
+                cnn = new SqlConnection(l_Cadena);
+                SqlCommand cmd = cnn.CreateCommand();
+                cnn.Open();
+                SqlDataReader dr = null;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_Estados";
+                cmd.Parameters.Clear();
+                dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Estados Estado = new Estados();
+
+                    Estado.Status = (string)dr["Status"];
+                    Estado.Estado = (string)dr["Estado"];
+
+                    LEstado.Add(Estado);
+
+                }
+
+                cnn.Close();
+
+
+                return Ok(LEstado);
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
 
     }
